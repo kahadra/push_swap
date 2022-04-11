@@ -1,4 +1,4 @@
-NAME := push_swap
+NAME := checker
 
 SRC_COMD := command/
 SRC_SETD := setup/
@@ -20,8 +20,9 @@ SRC_SET := $(addprefix $(SRC_SETD), setup.c)\
 SRC_UTIL :=  $(addprefix $(SRC_UTILD), utils.c)\
 				$(addprefix $(SRC_UTILD), utils2.c)\
 				$(addprefix $(SRC_UTILD), utils3.c)
-SRC := push_swap.c
-BOUNUS := checker.c
+SRC := push_swap.c\
+		checker.c\
+		checker_utils.c
 OBJ := $(SRC_COM:.c=.o)\
 		$(SRC_SORT:.c=.o)\
 		$(SRC_SET:.c=.o)\
@@ -43,7 +44,7 @@ HEADER	= ./header/
 
 AR = ar -rcs
 
-all : $(NAME)
+all : $(MKDIR) $(NAME)
 
 clean : 
 	rm -rf $(OBJ_D)
@@ -53,10 +54,7 @@ fclean : clean
 	
 re : fclean all
 
-bonus : $(OBJ_BO)
-	$(AR) $(AFLAGS) $(NAME) $?
-
-$(MKDIR) $(NAME) : $(OBJS)
+$(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 */%.o	: */%.c
 	$(CC) $(CFLAGS) -c $< -o $@
