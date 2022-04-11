@@ -27,7 +27,7 @@ static int	find_min(t_list *a)
 			count = 1;
 		}
 		else
-		count++;
+			count++;
 	}
 	return (i);
 }

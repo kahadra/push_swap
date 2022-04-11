@@ -35,32 +35,27 @@ char	*ft_strjoin_push_swap(char *left_line, char *buff)
 	return (tmp);
 }
 
-int	ft_atoi_push_swap(const char *nptr)
+int	ft_atoi_push_swap(const char *nptr, char **str)
 {
-	int	sign;
-	int	result;
-	int	tmp;
+	long long	sign;
+	long long	result;
 
 	sign = 1;
 	result = 0;
 	if ((*nptr >= 9 && 13 >= *nptr) || *nptr == 32)
-		exit (1);
+		exit(ft_put_err(NULL, "Error", str, 1));
 	if (*nptr == '-')
 		sign = -1;
 	if (*nptr == '-' || *nptr == '+')
 		nptr++;
+	if (*nptr == '\0')
+		exit(ft_put_err(NULL, "Error", str, 1));
 	while (*nptr >= '0' && '9' >= *nptr)
-	{
-		tmp = (result * 10) + sign * (*nptr - '0');
-		if (tmp > 0 && result < 0)
-			exit (1);
-		else if (tmp < 0 && result > 0)
-			exit (1);
-		result = tmp;
-		nptr++;
-	}
+		result = result * 10 + sign * (*nptr++ - '0');
+	if (result > 2147483647 || result < -2147483648)
+		exit(ft_put_err(NULL, "Error", str, 1));
 	if (*nptr != '\0' && !(*nptr >= '0' && '9' >= *nptr))
-		exit (1);
+		exit(ft_put_err(NULL, "Error", str, 1));
 	return (result);
 }
 

@@ -14,7 +14,6 @@
 # define PUSH_SWAP_H
 
 # include <stdlib.h>
-# include <stdio.h>
 
 typedef struct s_list
 {
@@ -34,8 +33,8 @@ typedef struct s_stacks
 */
 
 int			main(int ac, char **av);
-void		init_stack_a(t_stacks *stacks, int *src_arr, int size);
-void		init_stack_b(t_stacks *stacks, int size);
+void		init_stack_a(t_stacks *stacks, int *src_arr, int size, char **str);
+void		init_stack_b(t_stacks *stacks, int size, char **str);
 int			free_stack(t_stacks *stacks);
 
 /*
@@ -43,7 +42,7 @@ int			free_stack(t_stacks *stacks);
 */
 
 t_stacks	*setup_stack(char **str);
-int			*make_index_sort(int *arr, int size);
+int			*make_index_sort(int *arr, int size, char **str);
 char		**av_to_string(char	**av, int ac);
 int			ft_put_err(t_stacks *stacks, char *message, char **str, int ret);
 int			count_stack_size(char **str);
@@ -53,7 +52,7 @@ int			count_stack_size(char **str);
 */
 
 char		*ft_strjoin_push_swap(char *left_line, char *buff);
-int			ft_atoi_push_swap(const char *nptr);
+int			ft_atoi_push_swap(const char *nptr, char **str);
 int			ft_sort_int_arr(int *tab, int size);
 int			*index_preprocess(int *sorted, int *arr, int size);
 int			check_dup_arr(int *arr, int size);

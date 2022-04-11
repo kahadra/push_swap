@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chpark <chpark@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wonkim <wonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:01:49 by chpark            #+#    #+#             */
-/*   Updated: 2022/03/31 17:01:52 by chpark           ###   ########.fr       */
+/*   Updated: 2022/04/07 13:40:44 by wonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,22 @@ t_stacks	*setup_stack(char **str)
 	int			i;
 
 	size = count_stack_size(str);
-	stacks = (t_stacks *)malloc(sizeof(t_stacks));
 	int_arr = (int *)malloc(sizeof(int) * size);
 	if (int_arr == NULL)
 		exit(ft_put_err(NULL, "Error", str, 1));
 	i = -1;
 	while (str[++i])
-		int_arr[i] = ft_atoi_push_swap(str[i]);
+		int_arr[i] = ft_atoi_push_swap(str[i], str);
 	i = 0;
-	while (str[i] != NULL)
-		free(str[i++]);
-	int_arr = make_index_sort(int_arr, size);
-	init_stack_a(stacks, int_arr, size);
-	init_stack_b(stacks, size);
+	int_arr = make_index_sort(int_arr, size, str);
+	stacks = (t_stacks *)malloc(sizeof(t_stacks));
+	if (stacks == NULL)
+		exit(ft_put_err(NULL, "Error", str, 1));
+	init_stack_a(stacks, int_arr, size, str);
+	init_stack_b(stacks, size, str);
 	stacks->command = ft_strdup("");
+	if (stacks->command == NULL)
+		exit(ft_put_err(stacks, "Error", str, 1));
 	return (stacks);
 }
 
@@ -50,7 +52,7 @@ int	count_stack_size(char **str)
 	return (size);
 }
 
-int	*make_index_sort(int *arr, int size)
+int	*make_index_sort(int *arr, int size, char **str)
 {
 	int	*copy_arr;
 	int	i;
@@ -59,16 +61,17 @@ int	*make_index_sort(int *arr, int size)
 	if (copy_arr == NULL || !check_dup_arr(arr, size))
 	{
 		free(arr);
-		ft_putendl_fd("Malloc Error1", 1);
+		free(str);
+		ft_putendl_fd("Error", 2);
 		exit(1);
 	}
 	copy_arr = make_copy_arr(copy_arr, arr, size);
 	i = ft_sort_int_arr(copy_arr, size);
 	if (!i)
-	{	
+	{
 		free(arr);
+		free(str);
 		free(copy_arr);
-		ft_putendl_fd("Already sorted", 1);
 		exit(1);
 	}
 	arr = index_preprocess(copy_arr, arr, size);
@@ -83,7 +86,7 @@ char	**av_to_string(char	**av, int ac)
 	char	**result;
 
 	i = 1;
-	str = ft_strdup("");
+	str = NULL;
 	while (i < ac)
 	{
 		str = ft_strjoin_push_swap(str, av[i++]);
@@ -100,23 +103,23 @@ char	**av_to_string(char	**av, int ac)
 
 int	ft_put_err(t_stacks *stacks, char *message, char **str, int ret)
 {
-	int	i;
-
-	i = 0;
 	if (stacks)
 	{
+		if (stacks->stack_a->arr)
+			free(stacks->stack_a->arr);
 		if (stacks->stack_a)
 			free(stacks->stack_a);
+		if (stacks->stack_b->arr)
+			free(stacks->stack_b->arr);
 		if (stacks->stack_b)
 			free(stacks->stack_b);
+		if (stacks->command)
+			free(stacks->command);
+		free(stacks);
 	}
-	else
-	{
-		while (str[i] != NULL)
-			free(str[i++]);
+	if (str)
 		free(str);
-	}
 	if (message != NULL)
-		ft_putendl_fd(message, 1);
+		ft_putendl_fd(message, 2);
 	return (ret);
 }

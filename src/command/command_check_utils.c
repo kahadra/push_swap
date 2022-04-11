@@ -23,10 +23,11 @@ int	check_command_s(t_stacks *stack, char *command, int n)
 		else
 			return (1);
 	}
-	else if (n >= 3 && stack->command[n - 2] != 'r')
+	else if (n >= 3 && stack->command[n - 2] != command[1] \
+	&& stack->command[n - 3] == 's')
 		return (2);
 	else
-		return (-1);
+		return (1);
 }
 
 int	check_command_p(t_stacks *stack, char *command, int n)
