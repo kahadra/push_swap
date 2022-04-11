@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../header/push_swap.h"
-#include <stdlib.h>
 
 static int	*temp_init(t_list *a)
 {

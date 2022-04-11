@@ -102,7 +102,7 @@ int			*make_copy_arr(int *dest, int *src, int n);
 ** utils2.c
 */
 
-char		**ft_split(char const *s, char *c);
+char		**ft_split(char const *s, char c);
 
 /*
 ** utils3.c

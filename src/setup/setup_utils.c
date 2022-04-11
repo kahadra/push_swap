@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../header/push_swap.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 char	*ft_strjoin_push_swap(char *left_line, char *buff)
 {

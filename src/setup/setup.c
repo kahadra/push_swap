@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../header/push_swap.h"
-#include <stdlib.h>
 
 t_stacks	*setup_stack(char **str)
 {
@@ -97,7 +96,7 @@ char	**av_to_string(char	**av, int ac)
 		}
 		str = ft_strjoin_push_swap(str, " ");
 	}
-	result = ft_split(str, " ");
+	result = ft_split(str, ' ');
 	return (result);
 }
 

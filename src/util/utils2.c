@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../header/push_swap.h"
-#include <stdlib.h>
 
 static char	**error_free(char **tab)
 {
@@ -27,7 +26,7 @@ static char	**error_free(char **tab)
 	return (NULL);
 }
 
-static int	count_s(const char *s, char *c)
+static int	count_s(const char *s, char c)
 {
 	size_t	i;
 	size_t	count;
@@ -36,32 +35,32 @@ static int	count_s(const char *s, char *c)
 		return (0);
 	i = 0;
 	count = 0;
-	while (s[i] && s[i] == c[0])
+	while (s[i] && s[i] == c)
 		i++;
 	while (s[i])
 	{
-		if (s[i] == c[0])
+		if (s[i] == c)
 		{
 			count++;
-			while (s[i] && s[i] == c[0])
+			while (s[i] && s[i] == c)
 				i++;
 			continue ;
 		}
 		i++;
 	}
-	if (s[i - 1] != c[0])
+	if (s[i - 1] != c)
 		count++;
 	return (count);
 }
 
-static int	count_l(const char *s, char *c)
+static int	count_l(const char *s, char c)
 {
 	size_t	i;
 	size_t	l;
 
 	i = 0;
 	l = 0;
-	while (s[i] != c[0] && s[i] != '\0')
+	while (s[i] != c && s[i] != '\0')
 	{
 		i++;
 		l++;
@@ -69,7 +68,7 @@ static int	count_l(const char *s, char *c)
 	return (l);
 }
 
-static char	**fill_init(const char *s, char *c)
+static char	**fill_init(const char *s, char c)
 {
 	size_t	i;
 	size_t	j;
@@ -84,7 +83,7 @@ static char	**fill_init(const char *s, char *c)
 		return (NULL);
 	while (j < count)
 	{
-		while (s[i] == c[0])
+		while (s[i] == c)
 			i++;
 		s1[j] = ft_substr(s, i, count_l((s + i), c));
 		if (!s1[j])
@@ -96,13 +95,11 @@ static char	**fill_init(const char *s, char *c)
 	return (s1);
 }
 
-char	**ft_split(char const *s, char *c)
+char	**ft_split(char const *s, char c)
 {
 	char	**s1;
 
 	if (!s)
-		return (NULL);
-	if (ft_strlen(c) >= 2)
 		return (NULL);
 	s1 = fill_init(s, c);
 	return (s1);
